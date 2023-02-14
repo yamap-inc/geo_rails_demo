@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.1'
 
+gem 'activerecord-postgis-adapter'
 gem 'bootsnap', require: false
 gem 'importmap-rails'
 gem 'jbuilder'

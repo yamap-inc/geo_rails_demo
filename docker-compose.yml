@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    build:
+      context: ./docker/db/
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+
+volumes:
+  postgresql_data:

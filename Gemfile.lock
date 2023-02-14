@@ -54,6 +54,9 @@ GEM
     activerecord (7.0.4.2)
       activemodel (= 7.0.4.2)
       activesupport (= 7.0.4.2)
+    activerecord-postgis-adapter (8.0.1)
+      activerecord (~> 7.0.0)
+      rgeo-activerecord (~> 7.0.0)
     activestorage (7.0.4.2)
       actionpack (= 7.0.4.2)
       activejob (= 7.0.4.2)
@@ -165,6 +168,10 @@ GEM
     rake (13.0.6)
     regexp_parser (2.7.0)
     rexml (3.2.5)
+    rgeo (3.0.0)
+    rgeo-activerecord (7.0.1)
+      activerecord (>= 5.0)
+      rgeo (>= 1.0.0)
     rubocop (1.45.1)
       json (~> 2.3)
       parallel (~> 1.10)
@@ -228,6 +235,7 @@ PLATFORMS
   x86_64-darwin-22
 
 DEPENDENCIES
+  activerecord-postgis-adapter
   bootsnap
   capybara
   debug
