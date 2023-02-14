@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_14_134011) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_14_160225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
 
+  create_table "municipalities", force: :cascade do |t|
+    t.string "name", null: false
+  end
+
+  create_table "municipality_areas", force: :cascade do |t|
+    t.bigint "municipality_id", null: false
+    t.geometry "area", limit: {:srid=>3857, :type=>"st_polygon"}, null: false
+    t.index ["area"], name: "index_municipality_areas_on_area", using: :gist
+    t.index ["municipality_id"], name: "index_municipality_areas_on_municipality_id"
+  end
+
+  add_foreign_key "municipality_areas", "municipalities"
 end
