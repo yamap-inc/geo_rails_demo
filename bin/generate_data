@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+curl https://nlftp.mlit.go.jp/ksj/gml/data/N03/N03-2019/N03-190101_GML.zip --output municipalities.zip
+
+unzip -d municipalities municipalities.zip
+
+docker-compose run db shp2pgsql -I -s 4326:3857 municipalities/N03-19_190101.shp area_data > area_data.sql
+
+bin/rails db < area_data.sql
+
+rm municipalities.zip area_data.sql
+rm -Rf municipalities/
+
+echo "INSERT INTO municipalities (name) \
+      SELECT DISTINCT(n03_004) AS name \
+      FROM area_data;" | bin/rails db < /dev/stdin
+
+echo "INSERT INTO municipality_areas (area, municipality_id) \
+      SELECT (ST_Dump(geom)).geom AS area, municipalities.id AS municipality_id \
+      FROM area_data \
+      INNER JOIN municipalities ON name = n03_004;" | bin/rails db < /dev/stdin
+
+echo "DROP TABLE area_data;" | bin/rails db < /dev/stdin
