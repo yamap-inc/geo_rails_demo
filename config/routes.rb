@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get 'tiles/:zoom/:x/:y', to: 'tiles#show', as: :tile
+  resource :map_style, only: :show
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  root 'maps#show'
 end
