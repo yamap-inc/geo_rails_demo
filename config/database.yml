@@ -24,7 +24,7 @@ default: &default
 development:
   <<: *default
   database: geo_rails_demo_development
-  host: localhost
+  host: db
   username: demo
   password: demo
 
@@ -61,7 +61,7 @@ development:
 test:
   <<: *default
   database: geo_rails_demo_test
-  host: localhost
+  host: db
   username: demo
   password: demo
 

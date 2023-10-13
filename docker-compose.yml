@@ -12,6 +12,15 @@ services:
       - postgresql_data:/var/lib/postgresql/data
       - ./municipalities:/municipalities
       - ./rivers:/rivers
-
+  web:
+    build:
+      context: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/app
+      - bundle_data:/usr/local/bundle
+    ports:
+      - "3000:3000"
 volumes:
   postgresql_data:
+  bundle_data:
