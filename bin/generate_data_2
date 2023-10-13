@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# RUN INSIDE DOCKER CONTAINER
+
+set -e
+
+bin/rails db < area_data.sql
+bin/rails db < river_data.sql
+
+rm municipalities.zip area_data.sql river_data.sql
+rm -Rf municipalities/
+rm -Rf rivers/
+
+echo "INSERT INTO municipalities (name) \
+      SELECT DISTINCT(n03_004) AS name \
+      FROM area_data;" | bin/rails db < /dev/stdin
+
+echo "INSERT INTO municipality_areas (area, municipality_id) \
+      SELECT (ST_Dump(geom)).geom AS area, municipalities.id AS municipality_id \
+      FROM area_data \
+      INNER JOIN municipalities ON name = n03_004;" | bin/rails db < /dev/stdin
+
+echo "INSERT INTO rivers (line) \
+      SELECT (ST_Dump(geom)).geom AS line \
+      FROM river_data;" | bin/rails db < /dev/stdin
+
+echo "DROP TABLE area_data;" | bin/rails db < /dev/stdin
+echo "DROP TABLE river_data;" | bin/rails db < /dev/stdin
+

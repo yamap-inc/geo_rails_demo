@@ -6,7 +6,7 @@ class TilesController < ApplicationController
 
     respond_to do |format|
       format.mvt do
-        send_data(Municipality.as_mvt_for(zoom:, x:, y:))
+        send_data(River.as_mvt_for(zoom:, x:, y:))
       end
     end
   end

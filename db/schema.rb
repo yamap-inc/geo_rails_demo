@@ -27,8 +27,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_061049) do
   end
 
   create_table "rivers", force: :cascade do |t|
-    t.geometry "area", limit: {:srid=>3857, :type=>"st_polygon"}, null: false
-    t.index ["area"], name: "index_rivers_on_area", using: :gist
+    t.geometry "line", limit: {:srid=>3857, :type=>"line_string"}, null: false
+    t.index ["line"], name: "index_rivers_on_line", using: :gist
   end
 
   add_foreign_key "municipality_areas", "municipalities"
