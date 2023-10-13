@@ -11,6 +11,7 @@ services:
     volumes:
       - postgresql_data:/var/lib/postgresql/data
       - ./municipalities:/municipalities
+      - ./rivers:/rivers
 
 volumes:
   postgresql_data:
